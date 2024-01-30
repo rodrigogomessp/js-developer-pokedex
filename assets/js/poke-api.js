@@ -4,7 +4,16 @@ const pokeApi = {}
 function convertPokeApiDetailToPokemon(pokeDetail) {
     const pokemon = new Pokemon()
     pokemon.number = pokeDetail.id
-    pokemon.name = pokeDetail.name
+    pokemon.name = pokeDetail.name    
+
+    pokemon.stats = pokeDetail.stats.map( element => {
+        return {
+            points: element.base_stat,
+            description: element.stat.name.replace(/\-/g, ' ')
+        }
+    });
+
+    pokemon.weight = (pokeDetail.weight * 0.10).toFixed(2);
 
     const types = pokeDetail.types.map((typeSlot) => typeSlot.type.name)
     const [type] = types
